@@ -3,17 +3,12 @@
 Servo servo1;
 Servo servo2;
 
-// // pushbutton
-// bool lock = false;
-// bool buttonPressable = true;
-// const int buttonPin = 5; // button connected to digital pin 3
 // servo activation distance
 int distanceVal = 30;
 
 // define ultrasonic distance sensor pins
 const int trigPin1 = 9;
 const int echoPin1 = 8;
-// int ledPin = 3;
 // define variables used for distance sensor
 long duration1;
 int distance;
@@ -26,36 +21,15 @@ void setup() {
   servo1.attach(7);
   servo1.write(0);
   delay(200);
-  // second servo
-  // servo2.attach(6);
-  // servo2.write(0);
   delay(200);
   pinMode(trigPin1, OUTPUT);  // Sets the trigPin as an Output
   pinMode(echoPin1, INPUT);   // Sets the echoPin as an Input
-  // pinMode(buttonPin, INPUT); //output button push status as variable
-  // pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  // int buttonState = digitalRead(buttonPin); //store button status as variable
   distanceReady();
   functionality();
-  
-  // // change servo lock state
-  // if (buttonState == HIGH && buttonPressable == true){
-  //   lock = !lock;
-  //   }
-    
-  // this prevents holding the button down
-  // if (buttonState == HIGH && buttonPressable == true){
-  //   buttonPressable = false;
-  // } else if (buttonState == LOW){
-  //   buttonPressable = true;
-  // }
-
-  
-  // debug to serial monitor
-    Serial.println(distance);
+  Serial.println(distance);
 }
 
 void distanceReady() {
@@ -74,17 +48,47 @@ void distanceReady() {
 
 // main code that opens/closes the trash can
 void functionality() {
-  // open can when near
   if (distance <= distanceVal) {
     servo1.write(90);
     servo2.write(90);
-    digitalWrite(ledPin, LOW);
     delay(200);
-    // close can when far
   } else if (distance > distanceVal) {
     servo1.write(0);
     servo2.write(0);
-    digitalWrite(ledPin, LOW);
     delay(200);
-    // freeze servo
   }}
+
+void motorFunc() {
+  // for controlling motor if it wants to turn left, left is low right is high
+  // if it wants to turn right, left is high and right is low
+}
+
+void irFunc() {
+  // detecting barcode
+}
+
+void ultrasonicFunc(){
+  // check diagrams
+  // use to check distances from angles
+}
+
+void servoFunc(){
+  // 3 sectors - 45 degrees/90 deg/45 deg
+
+  // servo functionaltiy to move the ultrasonic sensor
+  // only moves when cntereded distance is less than 10 cm
+  // stop motors then turn servo to sector 1, record the distance
+  // check to sector 2, record distance
+  // also check the center distance - as a side note, if we get the highest distance
+  // we can remove it for efficency
+
+  /*
+  for example car goes straight, center sector <10, highest distance is left sector
+  car moves left. servo moves back into center, and then we repeat
+  whatever the highest distance is the direction we go.
+  BUt the servo should always be in the center.
+  
+  
+  
+  */
+}
