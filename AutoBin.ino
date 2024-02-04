@@ -3,17 +3,17 @@
 Servo servo1;
 Servo servo2;
 
-// pushbutton
-bool lock = false;
-bool buttonPressable = true;
-const int buttonPin = 5; // button connected to digital pin 3
+// // pushbutton
+// bool lock = false;
+// bool buttonPressable = true;
+// const int buttonPin = 5; // button connected to digital pin 3
 // servo activation distance
 int distanceVal = 30;
 
 // define ultrasonic distance sensor pins
 const int trigPin1 = 9;
 const int echoPin1 = 8;
-int ledPin = 3;
+// int ledPin = 3;
 // define variables used for distance sensor
 long duration1;
 int distance;
@@ -32,26 +32,26 @@ void setup() {
   delay(200);
   pinMode(trigPin1, OUTPUT);  // Sets the trigPin as an Output
   pinMode(echoPin1, INPUT);   // Sets the echoPin as an Input
-  pinMode(buttonPin, INPUT); //output button push status as variable
-  pinMode(ledPin, OUTPUT);
+  // pinMode(buttonPin, INPUT); //output button push status as variable
+  // pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  int buttonState = digitalRead(buttonPin); //store button status as variable
+  // int buttonState = digitalRead(buttonPin); //store button status as variable
   distanceReady();
   functionality();
   
-  // change servo lock state
-  if (buttonState == HIGH && buttonPressable == true){
-    lock = !lock;
-    }
+  // // change servo lock state
+  // if (buttonState == HIGH && buttonPressable == true){
+  //   lock = !lock;
+  //   }
     
   // this prevents holding the button down
-  if (buttonState == HIGH && buttonPressable == true){
-    buttonPressable = false;
-  } else if (buttonState == LOW){
-    buttonPressable = true;
-  }
+  // if (buttonState == HIGH && buttonPressable == true){
+  //   buttonPressable = false;
+  // } else if (buttonState == LOW){
+  //   buttonPressable = true;
+  // }
 
   
   // debug to serial monitor
@@ -75,20 +75,16 @@ void distanceReady() {
 // main code that opens/closes the trash can
 void functionality() {
   // open can when near
-  if (distance <= distanceVal && lock == false) {
+  if (distance <= distanceVal) {
     servo1.write(90);
     servo2.write(90);
     digitalWrite(ledPin, LOW);
     delay(200);
     // close can when far
-  } else if (distance > distanceVal && lock == false) {
+  } else if (distance > distanceVal) {
     servo1.write(0);
     servo2.write(0);
     digitalWrite(ledPin, LOW);
     delay(200);
     // freeze servo
-  } else if (lock == true)
-  {
-    digitalWrite(ledPin, HIGH);
-    delay(200);
   }}
